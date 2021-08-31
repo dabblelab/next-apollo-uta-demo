@@ -7,13 +7,14 @@ import Link from "next/link";
 export async function getServerSideProps() {
 	const { data } = await client.query({
 		query: gql`
-			query GetAllCompanies {
-				allCompanies {
+			query GetAllUsers {
+				allUsers {
 					id
 					name
-					website
-					address
-					employeesCount
+					email
+					phone
+					dob
+					company
 				}
 			}
 		`,
@@ -21,22 +22,22 @@ export async function getServerSideProps() {
 
 	return {
 		props: {
-			companies: data.allCompanies,
+			users: data.allUsers,
 		},
 	};
 }
 
-export default function Companies({ companies }) {
+export default function Users({ users }) {
 	return (
 		<div className={styles.container}>
 			<Head>
-				<title>Companies</title>
+				<title>Users</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
 			<main className={styles.main}>
 				<h1 className={styles.title}>
-					Welcome to <a href="#">Companies data!</a>
+					Welcome to <a href="#">Users data!</a>
 				</h1>
 
 				<br />
@@ -48,34 +49,43 @@ export default function Companies({ companies }) {
 				<br />
 
 				<div className={styles.grid}>
-					{companies.map((company) => (
-						<div key={company.id} className={styles.card}>
+					{users.map((user) => (
+						<div key={user.id} className={styles.card}>
 							<h3>
 								<a
-									href="#company-name"
+									href="#user-name"
 									aria-hidden="true"
 									className="aal_anchor"
-									id="company-name"
+									id="user-name"
 								>
 									📌
 								</a>
-								&nbsp; {company.name}
+								&nbsp; {user.name}
 							</h3>
 							<ul>
 								<li>
 									<p>
-										<strong>Website: </strong>{" "}
-										<a href={company.website}>{company.website}</a>
+										<strong>Email: </strong> {user.email}
 									</p>
 								</li>
 								<li>
 									<p>
-										<strong>Employees Count: </strong> {company.employeesCount}
+										<strong>Phone: </strong> {user.phone}
 									</p>
 								</li>
 								<li>
 									<p>
-										<strong>Address: </strong> {company.address}
+										<strong>Address: </strong> {user.address}
+									</p>
+								</li>
+								<li>
+									<p>
+										<strong>DOB: </strong> {user.dob}
+									</p>
+								</li>
+								<li>
+									<p>
+										<strong>Company: </strong> {user.company}
 									</p>
 								</li>
 							</ul>
@@ -89,7 +99,7 @@ export default function Companies({ companies }) {
 							<br />
 
 							<small>
-								<strong>🆔 </strong> {company.id}
+								<strong>ID: </strong> {user.id}
 							</small>
 						</div>
 					))}
