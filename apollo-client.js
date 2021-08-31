@@ -1,7 +1,9 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
+const PRODUCTION = process.env.production;
+const API_URL = true ? "https://node-graphql-uta-demo.vercel.app/graphql" : "http://locahost:4000/graphql";
 
 const client = new ApolloClient({
-    uri: "https://countries.trevorblades.com",
+    uri: API_URL,
     cache: new InMemoryCache(),
 });
 
