@@ -137,6 +137,23 @@
   cursor: pointer;
 }
 
+.covidContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.covidContainer > div {
+  padding: 1em;
+}
+
+/* .covidCard {
+  border: 1px solid gray;
+  padding: 0 2em;
+} */
+
 @media (max-width: 600px) {
   .main{
     width: 100%;

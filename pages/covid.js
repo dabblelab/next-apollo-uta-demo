@@ -64,7 +64,7 @@ export default function Companies({ continentData }) {
 				<div className={styles.searchContainer}>
 					<input
 						className={styles.searchInput}
-						placeHolder="Enter a country name to search"
+						placeholder="Enter a country name to search"
 						value={query}
 						onChange={(e) => setQuery(e.target.value)}
 					/>
@@ -86,10 +86,10 @@ export default function Companies({ continentData }) {
 								&nbsp; {continent.continent}
 							</h2>
 							<ul>
-								{Object.keys(continent).map((keyName) => {
+								{Object.keys(continent).map((keyName,index) => {
 									if (!["countries", "__typename"].includes(keyName)) {
 										return (
-											<li>
+											<li key={keyName}>
 												<p>
 													<strong>{keyName}: </strong> {continent[keyName]}
 												</p>
