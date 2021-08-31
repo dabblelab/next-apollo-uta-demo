@@ -10,8 +10,8 @@ export async function getServerSideProps({ params }) {
 
 	const { data } = await client.query({
 		query: gql`
-			query {
-				getCovidDataOfCountry(country: "india") {
+			query{
+				getCovidDataOfCountry(country: "${country}") {
 					active
 					recovered
 					critical
