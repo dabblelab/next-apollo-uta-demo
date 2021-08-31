@@ -3,6 +3,8 @@ import styles from "../styles/Main.module.css";
 import { gql } from "@apollo/client";
 import client from "../apollo-client";
 import Link from "next/link";
+import { useState } from "react";
+import { useRouter } from 'next/router'
 
 export async function getServerSideProps() {
 	const { data } = await client.query({
@@ -30,6 +32,15 @@ export async function getServerSideProps() {
 }
 
 export default function Companies({ continentData }) {
+  const [query, setQuery] = useState("");
+  const router = useRouter()
+
+  const handleSearch = () => {
+    const searchQuery = query.trim();
+
+    router.push("/covid/"+searchQuery);
+  }
+
 	return (
 		<div className={styles.container}>
 			<Head>
@@ -39,7 +50,7 @@ export default function Companies({ continentData }) {
 
 			<main className={styles.main}>
 				<h1 className={styles.title}>
-					<a>World Covid Data  </a>
+					<a>World Covid Data </a>
 				</h1>
 
 				<br />
@@ -50,10 +61,20 @@ export default function Companies({ continentData }) {
 				</small>
 				<br />
 
+				<div className={styles.searchContainer}>
+					<input
+						className={styles.searchInput}
+						placeHolder="Enter a country name to search"
+						value={query}
+						onChange={(e) => setQuery(e.target.value)}
+					/>
+					&nbsp;&nbsp;<button onClick={handleSearch}>🔍 Search</button>
+				</div>
+
 				<div className={styles.grid}>
 					{[...continentData].map((continent) => (
 						<div key={continent.continent} className={styles.card}>
-							<h3>
+							<h2>
 								<a
 									href="#company-name"
 									aria-hidden="true"
@@ -63,30 +84,19 @@ export default function Companies({ continentData }) {
 									🌎
 								</a>
 								&nbsp; {continent.continent}
-							</h3>
-              <ul>
-
-                {
-                  Object.keys(continent).map(keyName => {
-                    if (!["countries", "__typename"].includes(keyName)) {
-                      return <li>
-                      <p>
-                        <strong>{keyName}: </strong> {continent[keyName]}
-                      </p>
-                    </li>
-                    }
-                  })
-                }
-								{/* <li>
-									<p>
-										<strong>Employees Count: </strong> {company.employeesCount}
-									</p>
-								</li>
-								<li>
-									<p>
-										<strong>Address: </strong> {company.address}
-									</p>
-								</li> */}
+							</h2>
+							<ul>
+								{Object.keys(continent).map((keyName) => {
+									if (!["countries", "__typename"].includes(keyName)) {
+										return (
+											<li>
+												<p>
+													<strong>{keyName}: </strong> {continent[keyName]}
+												</p>
+											</li>
+										);
+									}
+								})}
 							</ul>
 						</div>
 					))}
