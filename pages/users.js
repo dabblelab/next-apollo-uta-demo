@@ -48,6 +48,10 @@ export default function Users({ users }) {
 				</small>
 				<br />
 
+				<Link href="/users/add">
+					<a>➕ Add a user</a>
+				</Link>
+
 				<div className={styles.grid}>
 					{users.map((user) => (
 						<div key={user.id} className={styles.card}>
@@ -93,7 +97,7 @@ export default function Users({ users }) {
 							<br />
 
 							<div>
-								<button>✏️ Edit</button> &nbsp; &nbsp;
+								{/* <button>✏️ Edit</button> &nbsp; &nbsp; */}
 								<button>🗑 Delete</button>
 							</div>
 							<br />

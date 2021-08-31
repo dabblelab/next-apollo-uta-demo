@@ -29,7 +29,11 @@ export default function AddCompany() {
 					employeesCount: $employeesCount
 				}
 			) {
-				id
+        id
+        name
+        website
+        address
+        employeesCount
 			}
 		}
 	`;
