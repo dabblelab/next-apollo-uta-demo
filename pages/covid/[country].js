@@ -40,7 +40,7 @@ export async function getServerSideProps({ params }) {
 }
 
 export default function Country({ countryName, data }) {
-	console.log(data);
+
 	return (
 		<div className={styles.container}>
 			<Head>
