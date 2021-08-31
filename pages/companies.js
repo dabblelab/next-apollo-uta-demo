@@ -90,7 +90,7 @@ export default function Companies({ companies }) {
 
 							<div>
 								{/* <button>✏️ Edit</button> &nbsp; &nbsp; */}
-								<button>🗑 Delete</button>
+								{/* <button>🗑 Delete</button> */}
 							</div>
 							<br />
 

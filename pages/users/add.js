@@ -15,32 +15,32 @@ export default function AddUser() {
 
 	const router = useRouter();
 
-	const ADD_USER_MUTATION = gql`
-		mutation addACompany(
-			$name: String!
-			$email: String!
-			$phone: String!
-			$dob: String!
-			$company: String
-		) {
-			addCompany(
-				company: {
-					name: $name
-					email: $email
-					phone: $phone
-					dob: $dob
-					company: $company
-				}
-			) {
-				id
-				name
-				email
-				phone
-				dob
-				company
-			}
-		}
-	`;
+  const ADD_USER_MUTATION = gql`
+    mutation addAUser(
+      $name: String!
+      $email: String!
+      $phone: String!
+      $dob: String!
+      $company: String!
+    ) {
+      addUser(
+        user: {
+          name: $name
+          email: $email
+          phone: $phone
+          dob: $dob
+          company: $company
+        }
+      ) {
+        id
+        name
+        email
+        phone
+        dob
+        company
+      }
+  }
+  `;
 
 	const [executeAddUser, { data, loading, error }] = useMutation(
 		ADD_USER_MUTATION,

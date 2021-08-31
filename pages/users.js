@@ -98,7 +98,7 @@ export default function Users({ users }) {
 
 							<div>
 								{/* <button>✏️ Edit</button> &nbsp; &nbsp; */}
-								<button>🗑 Delete</button>
+								{/* <button>🗑 Delete</button> */}
 							</div>
 							<br />
 
