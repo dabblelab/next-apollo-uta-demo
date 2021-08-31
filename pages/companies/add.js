@@ -34,32 +34,29 @@ export default function AddCompany() {
 		}
 	`;
 
-	const [executeAddCompany, { data, loading, error }] =
-		useMutation(ADD_COMPANY_MUTATION);
+	const [executeAddCompany, { data, loading, error }] = useMutation(
+		ADD_COMPANY_MUTATION,
+		{
+			refetchQueries: [
+				"GetAllCompanies", // Refetch all company data
+			],
+		}
+	);
 
 	const handleSubmit = () => {
-		const companyInputData = {
-			name,
-			website,
-			address,
-			employeesCount,
-		};
-		console.log(companyInputData);
-
 		executeAddCompany({
 			variables: {
 				name,
 				website,
 				address,
-				employeesCount,
+				employeesCount: parseInt(employeesCount),
 			},
 		}).then(() => {
-			// router.push("/companies/");
-      console.log("submitted")
+			console.log("submitted");
+			router.push("/companies");
 		});
 	};
 
-	if (loading) return "Submitting...";
 	if (error) return `Submission error! ${error.message}`;
 
 	return (
@@ -74,58 +71,62 @@ export default function AddCompany() {
 
 				<br />
 				<small>
-					<Link href="/">
-						<a>↩️ Back to Home</a>
+					<Link href="/companies">
+						<a>↩️ Back to Companies</a>
 					</Link>
 				</small>
 				<br />
 
-				<div className={styles.formContainer}>
-					<label htmlFor="name">Name</label>
-					<br />
-					<input
-						id="name"
-						type="text"
-						value={name}
-						onChange={(e) => setName(e.target.value)}
-					/>
-					<br />
-					<br />
+				{loading ? (
+					"Submitting..."
+				) : (
+					<div className={styles.formContainer}>
+						<label htmlFor="name">Name of the company</label>
+						<br />
+						<input
+							id="name"
+							type="text"
+							value={name}
+							onChange={(e) => setName(e.target.value)}
+						/>
+						<br />
+						<br />
 
-					<label htmlFor="website">Website</label>
-					<br />
-					<input
-						id="website"
-						type="text"
-						value={website}
-						onChange={(e) => setWebsite(e.target.value)}
-					/>
-					<br />
-					<br />
+						<label htmlFor="website">Website</label>
+						<br />
+						<input
+							id="website"
+							type="text"
+							value={website}
+							onChange={(e) => setWebsite(e.target.value)}
+						/>
+						<br />
+						<br />
 
-					<label htmlFor="address">Address</label>
-					<br />
-					<input
-						id="address"
-						type="text"
-						value={address}
-						onChange={(e) => setAddress(e.target.value)}
-					/>
-					<br />
-					<br />
+						<label htmlFor="address">Address</label>
+						<br />
+						<input
+							id="address"
+							type="text"
+							value={address}
+							onChange={(e) => setAddress(e.target.value)}
+						/>
+						<br />
+						<br />
 
-					<label htmlFor="employeesCount">Employees count</label>
-					<br />
-					<input
-						id="employeesCount"
-						type="number"
-						value={employeesCount}
-						onChange={(e) => setEmployeesCount(e.target.value)}
-					/>
-					<br />
+						<label htmlFor="employeesCount">Employees count</label>
+						<br />
+						<input
+							id="employeesCount"
+							type="number"
+							value={employeesCount}
+							onChange={(e) => setEmployeesCount(e.target.value)}
+						/>
+						<br />
 
-					<button onClick={handleSubmit}>Submit</button>
-				</div>
+						<button onClick={handleSubmit}>Submit</button>
+					</div>
+				)}
 			</main>
 		</div>
 	);

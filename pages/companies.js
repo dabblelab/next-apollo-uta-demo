@@ -46,6 +46,12 @@ export default function Companies({ companies }) {
 					</Link>
 				</small>
 				<br />
+				<br />
+
+
+				<Link href="/companies/add">
+					<a>➕ Add a company</a>
+				</Link>
 
 				<div className={styles.grid}>
 					{companies.map((company) => (
