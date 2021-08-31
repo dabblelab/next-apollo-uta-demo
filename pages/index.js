@@ -65,7 +65,7 @@ export default function Home() {
 						<br />
 						<br />
 
-						<Link href="/covid-data">
+						<Link href="/covid">
 							<a>
 								{" "}
 								<svg
