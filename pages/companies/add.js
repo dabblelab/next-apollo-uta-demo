@@ -41,9 +41,10 @@ export default function AddCompany() {
 	const [executeAddCompany, { data, loading, error }] = useMutation(
 		ADD_COMPANY_MUTATION,
 		{
-			refetchQueries: [
-				"GetAllCompanies", // Refetch all company data
-			],
+			// refetchQueries: [
+			// 	"GetAllCompanies", // Refetch all company data
+			// ],
+			onCompleted: (data) => router.push("/companies")
 		}
 	);
 
@@ -57,7 +58,7 @@ export default function AddCompany() {
 			},
 		}).then(() => {
 			console.log("submitted");
-			router.push("/companies");
+			// router.push("/companies");
 		});
 	};
 

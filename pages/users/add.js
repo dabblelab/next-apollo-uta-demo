@@ -45,9 +45,10 @@ export default function AddUser() {
 	const [executeAddUser, { data, loading, error }] = useMutation(
 		ADD_USER_MUTATION,
 		{
-			refetchQueries: [
-				"GetAllUsers", // Refetch all company data
-			],
+			// refetchQueries: [
+			// 	"GetAllUsers", // Refetch all company data
+			// ],
+			onCompleted: (data) => router.push("/users")
 		}
 	);
 
@@ -62,7 +63,7 @@ export default function AddUser() {
 			},
 		}).then(() => {
 			console.log("submitted");
-			router.push("/users");
+			// router.push("/users");
 		});
 	};
 

@@ -1,32 +1,53 @@
 import Head from "next/head";
 import styles from "../../styles/Main.module.css";
-import { gql } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 import client from "../../apollo-client";
 import Link from "next/link";
 
-export async function getServerSideProps() {
-	const { data } = await client.query({
-		query: gql`
-			query GetAllCompanies {
-				allCompanies {
-					id
-					name
-					website
-					address
-					employeesCount
-				}
-			}
-		`,
+// export async function getServerSideProps() {
+// 	const { data } = await client.query({
+// 		query: gql`
+// 			query GetAllCompanies {
+// 				allCompanies {
+// 					id
+// 					name
+// 					website
+// 					address
+// 					employeesCount
+// 				}
+// 			}
+// 		`,
+// 	});
+
+// 	console.log("data", data);
+
+// 	return {
+// 		props: {
+// 			companies: data.allCompanies,
+// 		},
+// 	};
+// }
+
+const GET_ALL_COMPANIES = gql`
+	query GetAllCompanies {
+		allCompanies {
+			id
+			name
+			website
+			address
+			employeesCount
+		}
+	}
+`;
+
+export default function Companies() {
+	const { loading, error, data } = useQuery(GET_ALL_COMPANIES, {
+		fetchPolicy: "network-only", // Used for first execution
+		nextFetchPolicy: "network-only",
 	});
 
-	return {
-		props: {
-			companies: data.allCompanies,
-		},
-	};
-}
+	const companies = data?.allCompanies;
 
-export default function Companies({ companies }) {
 	return (
 		<div className={styles.container}>
 			<Head>
@@ -48,57 +69,62 @@ export default function Companies({ companies }) {
 				<br />
 				<br />
 
-
 				<Link href="/companies/add">
 					<a>➕ Add a company</a>
 				</Link>
 
 				<div className={styles.grid}>
-					{companies.map((company) => (
-						<div key={company.id} className={styles.card}>
-							<h3>
-								<a
-									href="#company-name"
-									aria-hidden="true"
-									className="aal_anchor"
-									id="company-name"
-								>
-									📌
-								</a>
-								&nbsp; {company.name}
-							</h3>
-							<ul>
-								<li>
-									<p>
-										<strong>Website: </strong>{" "}
-										<a href={company.website}>{company.website}</a>
-									</p>
-								</li>
-								<li>
-									<p>
-										<strong>Employees Count: </strong> {company.employeesCount}
-									</p>
-								</li>
-								<li>
-									<p>
-										<strong>Address: </strong> {company.address}
-									</p>
-								</li>
-							</ul>
+					{loading ? (
+						<p>Loading ...</p>
+					) : (
+						companies &&
+						companies.map((company) => (
+							<div key={company.id} className={styles.card}>
+								<h3>
+									<a
+										href="#company-name"
+										aria-hidden="true"
+										className="aal_anchor"
+										id="company-name"
+									>
+										📌
+									</a>
+									&nbsp; {company.name}
+								</h3>
+								<ul>
+									<li>
+										<p>
+											<strong>Website: </strong>{" "}
+											<a href={company.website}>{company.website}</a>
+										</p>
+									</li>
+									<li>
+										<p>
+											<strong>Employees Count: </strong>{" "}
+											{company.employeesCount}
+										</p>
+									</li>
+									<li>
+										<p>
+											<strong>Address: </strong> {company.address}
+										</p>
+									</li>
+								</ul>
 
-							<br />
+								<br />
 
-							<div>
-								{/* <button>✏️ Edit</button> &nbsp; &nbsp; */}
-								{/* <button>🗑 Delete</button> */}
+								<div>
+									{/* <button>✏️ Edit</button> &nbsp; &nbsp; */}
+									{/* <button>🗑 Delete</button> */}
+								</div>
+								<br />
+
+								<small>
+									<strong>🆔 </strong> {company.id}
+								</small>
 							</div>
-							<br />
-
-							<small>
-								<strong>🆔 </strong> {company.id}
-							</small>
-						</div>
-					))}
+						))
+					)}
 				</div>
 			</main>
 		</div>

@@ -4,8 +4,7 @@ const API_URL = true ? "https://node-graphql-uta-demo.vercel.app/graphql" : "htt
 
 const client = new ApolloClient({
     uri: API_URL,
-    cache: new InMemoryCache(),
-    ssrMode: true
+    cache: new InMemoryCache()
 });
 
 export default client;
