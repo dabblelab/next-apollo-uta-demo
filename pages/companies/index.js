@@ -1,7 +1,7 @@
 import Head from "next/head";
-import styles from "../styles/Main.module.css";
+import styles from "../../styles/Main.module.css";
 import { gql } from "@apollo/client";
-import client from "../apollo-client";
+import client from "../../apollo-client";
 import Link from "next/link";
 
 export async function getServerSideProps() {
